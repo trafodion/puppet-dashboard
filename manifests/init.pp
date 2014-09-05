@@ -98,16 +98,17 @@ class dashboard (
 
   include mysql
   class { 'mysql::server':
-    config_hash => { 'root_password' => $mysql_root_pw }
+    root_password => $mysql_root_pw, 
   }
-  class { 'mysql::ruby':
-    package_provider => $mysql_package_provider,
-    package_name     => $ruby_mysql_package,
+  class { 'mysql::bindings':
+    ruby_enable           => true,
+    ruby_package_provider => $mysql_package_provider,
+    ruby_package_name     => $ruby_mysql_package,
   }
 
   if $passenger {
     Class['mysql']
-    -> Class['mysql::ruby']
+    -> Class['mysql::bindings']
     -> Class['mysql::server']
     -> Package[$dashboard_package]
     -> Mysql::DB[$dashboard_db]
@@ -123,7 +124,7 @@ class dashboard (
     }
   } else {
     Class['mysql']
-    -> Class['mysql::ruby']
+    -> Class['mysql::bindings']
     -> Class['mysql::server']
     -> Package[$dashboard_package]
     -> Mysql::DB[$dashboard_db]
