@@ -9,5 +9,5 @@ project_page 'https://git.openstack.org/cgit/openstack-infra/puppet-dashboard'
 
 ## Add dependencies, if any:
 dependency 'puppetlabs/mysql', '>= 2.0.0'
-dependency 'puppetlabs/apache', '>= 0.0.4'
+dependency 'puppetlabs/apache', '0.4.0'
 dependency 'puppetlabs/passenger', '>= 0.0.2'
