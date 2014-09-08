@@ -55,8 +55,6 @@
 # Actions:
 #
 # Requires:
-# Class['mysql']
-# Class['mysql::ruby']
 # Class['mysql::server']
 # Apache::Vhost[$dashboard_site]
 #
@@ -96,7 +94,6 @@ class dashboard (
   $rack_version             = $dashboard::params::rack_version
 ) inherits dashboard::params {
 
-  include mysql
   class { 'mysql::server':
     root_password => $mysql_root_pw, 
   }
@@ -107,10 +104,7 @@ class dashboard (
   }
 
   if $passenger {
-    Class['mysql']
-    -> Class['mysql::bindings']
-    -> Class['mysql::server']
-    -> Package[$dashboard_package]
+    Package[$dashboard_package]
     -> Mysql::DB[$dashboard_db]
     -> File["${dashboard::params::dashboard_root}/config/database.yml"]
     -> Exec['db-migrate']
@@ -123,10 +117,7 @@ class dashboard (
       dashboard_root   => $dashboard_root,
     }
   } else {
-    Class['mysql']
-    -> Class['mysql::bindings']
-    -> Class['mysql::server']
-    -> Package[$dashboard_package]
+    Package[$dashboard_package]
     -> Mysql::DB[$dashboard_db]
     -> File["${dashboard::params::dashboard_root}/config/database.yml"]
     -> Exec['db-migrate']
