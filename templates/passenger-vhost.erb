@@ -1,9 +1,9 @@
-Listen <%= dashboard_port %>
+Listen <%= @dashboard_port %>
 
-<VirtualHost *:<%= dashboard_port %>>
-  ServerName <%= name %>
-  DocumentRoot <%= docroot %>
-  RailsBaseURI <%= rails_base_uri %>
+<VirtualHost *:<%= @dashboard_port %>>
+  ServerName <%= @name %>
+  DocumentRoot <%= @docroot %>
+  RailsBaseURI <%= @rails_base_uri %>
 
   # Apparently HighPerformance, MaxPoolSize, PoolIdleTime and MaxRequests
   # are all optimized by default in Passenger 3. Currently the dashboard
@@ -17,15 +17,15 @@ Listen <%= dashboard_port %>
   PassengerPoolIdleTime 1500
   PassengerStatThrottleRate 1800
 
-  <Directory <%= docroot %>>
+  <Directory <%= @docroot %>>
     Options None
     AllowOverride AuthConfig
     Order allow,deny
     allow from all
   </Directory>
-  ErrorLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_error.log
+  ErrorLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= @name %>_error.log
   LogLevel warn
-  CustomLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= name %>_access.log combined
+  CustomLog /var/log/<%= scope.lookupvar("apache::params::apache_name") %>/<%= @name %>_access.log combined
   ServerSignature On
 </VirtualHost>
 
