@@ -217,7 +217,7 @@ class dashboard (
       ensure     => 'present',
       comment    => 'Puppet Dashboard',
       gid        => $dashboard_group,
-      shell      => '/sbin/nologin',
+      shell      => '/usr/sbin/nologin',
       managehome => true,
       home       => "/home/${dashboard_user}",
   }
